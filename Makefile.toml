@@ -1,0 +1,36 @@
+[tasks.wasm]
+command = "cargo"
+args = ["wasm"]
+
+[tasks.wasm-debug]
+command = "cargo"
+args = ["wasm", "--features", "backtraces"]
+
+[tasks.unit-test]
+command = "cargo"
+args = ["test"]
+
+[tasks.optimize]
+script = '''
+docker run --rm -v "$(pwd)":/code \
+  --mount type=volume,source="$(basename "$(pwd)")_cache",target=/target \
+  --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+  cosmwasm/optimizer:0.17.0
+'''
+
+[tasks.schema]
+script = '''
+for d in contracts/*/; do
+  cd "$d"
+  cargo schema
+  cd - >/dev/null
+done
+'''
+
+[tasks.fmt]
+command = "cargo"
+args = ["fmt"]
+
+[tasks.clippy]
+command = "cargo"
+args = ["clippy", "--", "-D", "warnings"]
