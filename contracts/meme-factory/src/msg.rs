@@ -43,6 +43,11 @@ pub enum ExecuteMsg {
         min_target_raise: Option<Uint128>,
         max_target_raise: Option<Uint128>,
     },
+    /// Withdraw accumulated fees (owner only)
+    WithdrawFees {
+        amount: Option<Uint128>,
+        recipient: Option<String>,
+    },
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

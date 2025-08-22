@@ -42,6 +42,9 @@ pub fn execute(
             min_target_raise,
             max_target_raise,
         ),
+        ExecuteMsg::WithdrawFees { amount, recipient } => {
+            withdraw_fees(deps, env, info, amount, recipient)
+        }
     }
 }
 
@@ -375,4 +378,62 @@ fn validate_launch_config(
     }
 
     Ok(())
+}
+
+fn withdraw_fees(
+    deps: DepsMut,
+    env: Env,
+    info: MessageInfo,
+    amount: Option<Uint128>,
+    recipient: Option<String>,
+) -> Result<Response, ContractError> {
+    let config = CONFIG.load(deps.storage)?;
+
+    // Only owner can withdraw fees
+    if info.sender != config.owner {
+        return Err(ContractError::Unauthorized {});
+    }
+
+    // Get contract balance
+    let contract_balance = deps
+        .querier
+        .query_balance(&env.contract.address, "uatom")?;
+
+    // Determine withdrawal amount
+    let withdraw_amount = if let Some(amt) = amount {
+        if amt > contract_balance.amount {
+            return Err(ContractError::InsufficientFunds {
+                required: amt.to_string(),
+                sent: contract_balance.amount.to_string(),
+            });
+        }
+        amt
+    } else {
+        // Withdraw all if no amount specified
+        contract_balance.amount
+    };
+
+    if withdraw_amount.is_zero() {
+        return Err(ContractError::InvalidSwapAmount {});
+    }
+
+    // Determine recipient (owner if not specified)
+    let recipient_addr = if let Some(addr) = recipient {
+        deps.api.addr_validate(&addr)?
+    } else {
+        config.owner
+    };
+
+    // Send funds
+    let send_msg = BankMsg::Send {
+        to_address: recipient_addr.to_string(),
+        amount: vec![coin(withdraw_amount.u128(), "uatom")],
+    };
+
+    Ok(Response::new()
+        .add_message(send_msg)
+        .add_attribute("method", "withdraw_fees")
+        .add_attribute("amount", withdraw_amount)
+        .add_attribute("recipient", recipient_addr)
+        .add_attribute("withdrawn_by", info.sender))
 }

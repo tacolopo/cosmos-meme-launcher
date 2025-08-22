@@ -29,9 +29,12 @@ A simple, user-friendly platform for launching meme coins on Cosmos Hub using th
 
 The contracts are deployed and live on Cosmos Hub mainnet:
 
-- **Meme Factory**: `cosmos1dm97n7hnztp73ctekf0a8qfnaqlggpz3mvn5c9kjhjfqzu8tl3uq3d2yd6`
+- **Meme Factory V2** (with withdraw function): `cosmos1pdguwgdtg225u22097a7wq7leuvulex8hxalr6hdtx6kqhq4sk7qew0k0y`
 - **Meme Token Code ID**: `293`
-- **Meme Factory Code ID**: `294`
+- **Meme Factory V2 Code ID**: `295`
+
+### Previous Versions
+- **Meme Factory V1**: `cosmos1dm97n7hnztp73ctekf0a8qfnaqlggpz3mvn5c9kjhjfqzu8tl3uq3d2yd6` (Code ID: 294) - No withdraw function
 
 ### Contract Parameters
 
