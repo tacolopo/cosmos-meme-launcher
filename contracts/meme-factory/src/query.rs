@@ -59,7 +59,7 @@ fn query_meme_tokens(
 
     let tokens: StdResult<Vec<_>> = MEME_TOKENS
         .range(deps.storage, None, None, cosmwasm_std::Order::Ascending)
-        .skip_while(|(k, _)| *k <= start)
+        .skip_while(|res| res.as_ref().map_or(false, |(k, _)| *k <= start))
         .take(limit)
         .map(|item| item.map(|(_, token)| token))
         .collect();
@@ -100,8 +100,9 @@ fn query_buy_quote(deps: Deps, token_id: u64, atom_amount: Uint128) -> StdResult
     // Calculate price impact
     let total_atom = bonding_curve.virtual_atom_reserves + bonding_curve.real_atom_reserves;
     let price_impact = if !total_atom.is_zero() {
-        let impact = atom_amount.checked_mul(Uint128::new(10000))
-            .and_then(|x| x.checked_div(total_atom))
+        let impact = atom_amount
+            .checked_mul(Uint128::new(10000))
+            .map(|x| x.checked_div(total_atom).unwrap_or_default())
             .unwrap_or_default();
         format!("{:.2}%", impact.u128() as f64 / 100.0)
     } else {
@@ -123,8 +124,9 @@ fn query_sell_quote(deps: Deps, token_id: u64, token_amount: Uint128) -> StdResu
     // Calculate price impact
     let total_tokens = bonding_curve.virtual_token_reserves + bonding_curve.real_token_reserves;
     let price_impact = if !total_tokens.is_zero() {
-        let impact = token_amount.checked_mul(Uint128::new(10000))
-            .and_then(|x| x.checked_div(total_tokens))
+        let impact = token_amount
+            .checked_mul(Uint128::new(10000))
+            .map(|x| x.checked_div(total_tokens).unwrap_or_default())
             .unwrap_or_default();
         format!("{:.2}%", impact.u128() as f64 / 100.0)
     } else {

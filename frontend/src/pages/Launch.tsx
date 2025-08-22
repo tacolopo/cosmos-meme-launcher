@@ -29,6 +29,7 @@ import {
 } from '@chakra-ui/react';
 import { useWallet } from '../contexts/WalletContext';
 import { useContract } from '../contexts/ContractContext';
+import { CONTRACTS, formatAtom } from '../config/contracts';
 
 const Launch: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -107,7 +108,7 @@ const Launch: React.FC = () => {
         },
       };
 
-      const funds = [{ denom: 'uatom', amount: '1000000' }]; // 1 ATOM creation fee
+      const funds = [{ denom: CONTRACTS.DENOM, amount: CONTRACTS.FACTORY_CONFIG.creation_fee }]; // Creation fee from config
 
       await executeContract(msg, funds);
 
@@ -362,7 +363,7 @@ const Launch: React.FC = () => {
             <Alert status="info">
               <AlertIcon />
               <Box>
-                <AlertTitle>Launch Fee: 1 ATOM</AlertTitle>
+                <AlertTitle>Launch Fee: {formatAtom(CONTRACTS.FACTORY_CONFIG.creation_fee)} ATOM</AlertTitle>
                 <AlertDescription>
                   This fee helps prevent spam and supports the platform.
                 </AlertDescription>

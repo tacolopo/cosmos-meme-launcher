@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { GasPrice } from '@cosmjs/stargate';
+import { CONTRACTS } from '../config/contracts';
 
 interface WalletContextType {
   isConnected: boolean;
@@ -38,7 +39,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
         throw new Error('Keplr wallet not found');
       }
 
-      const chainId = 'cosmoshub-4';
+      const chainId = CONTRACTS.CHAIN_ID;
       await window.keplr.enable(chainId);
 
       const offlineSigner = window.keplr.getOfflineSigner(chainId);
@@ -48,8 +49,8 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
         throw new Error('No accounts found');
       }
 
-      const rpcEndpoint = 'https://cosmos-rpc.publicnode.com:443'; // Using memory preference
-      const gasPrice = GasPrice.fromString('0.025uatom');
+      const rpcEndpoint = CONTRACTS.RPC_ENDPOINT;
+      const gasPrice = GasPrice.fromString(`0.025${CONTRACTS.DENOM}`);
 
       const cosmWasmClient = await SigningCosmWasmClient.connectWithSigner(
         rpcEndpoint,

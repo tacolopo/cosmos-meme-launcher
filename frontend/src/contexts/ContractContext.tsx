@@ -1,5 +1,6 @@
 import React, { createContext, useContext, ReactNode } from 'react';
 import { useWallet } from './WalletContext';
+import { CONTRACTS } from '../config/contracts';
 
 interface ContractContextType {
   factoryAddress: string;
@@ -24,8 +25,8 @@ interface ContractProviderProps {
 export const ContractProvider: React.FC<ContractProviderProps> = ({ children }) => {
   const { client, address } = useWallet();
   
-  // TODO: Replace with actual deployed contract address
-  const factoryAddress = 'cosmos1...'; // Will be set after deployment
+  // Use deployed contract address from config
+  const factoryAddress = CONTRACTS.MEME_FACTORY;
 
   const executeContract = async (msg: any, funds: any[] = []) => {
     if (!client || !address) {
@@ -33,8 +34,8 @@ export const ContractProvider: React.FC<ContractProviderProps> = ({ children }) 
     }
 
     const fee = {
-      amount: [{ denom: 'uatom', amount: '5000' }],
-      gas: '200000',
+      amount: [{ denom: CONTRACTS.DENOM, amount: '15000' }], // Updated gas fee
+      gas: '600000', // Increased gas limit for contract execution
     };
 
     return await client.execute(address, factoryAddress, msg, fee, '', funds);

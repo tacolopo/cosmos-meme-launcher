@@ -18,11 +18,11 @@ cosmwasm-storage = { workspace = true }
 cw-storage-plus = { workspace = true }
 cw2 = { workspace = true }
 cw20 = { workspace = true }
-cw20-base = { workspace = true }
+cw20-base = { workspace = true, features = ["library"] }
 schemars = { workspace = true }
 serde = { workspace = true }
 thiserror = { workspace = true }
-meme-shared = { path = "../../packages/meme-shared" }
+meme-shared = { path = "../../packages/meme-shared", features = ["cw20-base"] }
 
 [dev-dependencies]
 cw-multi-test = { workspace = true }

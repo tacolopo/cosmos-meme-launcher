@@ -10,7 +10,6 @@ pub use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
 use cosmwasm_std::{Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult};
-use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
 use meme_shared::ContractError;
 
 #[cfg_attr(not(feature = "library"), entry_point)]

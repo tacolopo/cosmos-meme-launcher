@@ -1,10 +1,16 @@
-use cosmwasm_std::StdError;
+use cosmwasm_std::{StdError, OverflowError, DivideByZeroError};
 use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ContractError {
     #[error("{0}")]
     Std(#[from] StdError),
+
+    #[error("{0}")]
+    Overflow(#[from] OverflowError),
+
+    #[error("{0}")]
+    DivideByZero(#[from] DivideByZeroError),
 
     #[error("Unauthorized")]
     Unauthorized {},
@@ -35,4 +41,12 @@ pub enum ContractError {
 
     #[error("Insufficient liquidity")]
     InsufficientLiquidity {},
+}
+
+// CW20 base error conversion - only enabled when cw20-base feature is active
+#[cfg(feature = "cw20-base")]
+impl From<cw20_base::ContractError> for ContractError {
+    fn from(err: cw20_base::ContractError) -> Self {
+        ContractError::Std(cosmwasm_std::StdError::generic_err(err.to_string()))
+    }
 }

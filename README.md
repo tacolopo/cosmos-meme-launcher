@@ -25,6 +25,21 @@ A simple, user-friendly platform for launching meme coins on Cosmos Hub using th
 - Real-time price updates
 - Mobile-responsive design
 
+## Deployed Contracts (Cosmos Hub)
+
+The contracts are deployed and live on Cosmos Hub mainnet:
+
+- **Meme Factory**: `cosmos1dm97n7hnztp73ctekf0a8qfnaqlggpz3mvn5c9kjhjfqzu8tl3uq3d2yd6`
+- **Meme Token Code ID**: `293`
+- **Meme Factory Code ID**: `294`
+
+### Contract Parameters
+
+- **Creation Fee**: 0.1 ATOM
+- **Platform Fee**: 2%
+- **Min Target Raise**: 100 ATOM  
+- **Max Target Raise**: 10,000 ATOM
+
 ## Getting Started
 
 ### Prerequisites
@@ -32,6 +47,7 @@ A simple, user-friendly platform for launching meme coins on Cosmos Hub using th
 - Rust 1.70+
 - Node.js 18+
 - Docker (for optimized builds)
+- Keplr wallet (for frontend interaction)
 
 ### Development
 
@@ -51,6 +67,16 @@ docker run --rm -v "$(pwd)":/code \
   --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
   cosmwasm/optimizer:0.17.0
 ```
+
+### Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+The frontend will connect to the deployed contracts on Cosmos Hub mainnet.
 
 ## License
 
