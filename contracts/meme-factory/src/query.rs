@@ -55,14 +55,24 @@ fn query_meme_tokens(
     limit: Option<u32>,
 ) -> StdResult<MemeTokensResponse> {
     let limit = limit.unwrap_or(30).min(100) as usize;
-    let start = start_after.unwrap_or(0);
 
-    let tokens: StdResult<Vec<_>> = MEME_TOKENS
-        .range(deps.storage, None, None, cosmwasm_std::Order::Ascending)
-        .skip_while(|res| res.as_ref().map_or(false, |(k, _)| *k <= start))
-        .take(limit)
-        .map(|item| item.map(|(_, token)| token))
-        .collect();
+    let tokens: StdResult<Vec<_>> = match start_after {
+        Some(start) => {
+            MEME_TOKENS
+                .range(deps.storage, None, None, cosmwasm_std::Order::Ascending)
+                .skip_while(|res| res.as_ref().map_or(false, |(k, _)| *k <= start))
+                .take(limit)
+                .map(|item| item.map(|(_, token)| token))
+                .collect()
+        }
+        None => {
+            MEME_TOKENS
+                .range(deps.storage, None, None, cosmwasm_std::Order::Ascending)
+                .take(limit)
+                .map(|item| item.map(|(_, token)| token))
+                .collect()
+        }
+    };
 
     Ok(MemeTokensResponse { tokens: tokens? })
 }
