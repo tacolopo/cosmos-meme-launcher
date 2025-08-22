@@ -85,8 +85,41 @@ const Portfolio: React.FC = () => {
       });
       setCreatedTokens(createdResponse.tokens || []);
 
-      // TODO: Load user balances for each token
-      // This would require querying each token contract individually
+      // Load all tokens to check user balances
+      const allTokensResponse = await queryContract({
+        meme_tokens: { limit: 50 }
+      });
+      const allTokens = allTokensResponse.tokens || [];
+
+      // Load user balances for each token
+      const userTokensWithBalances = [];
+      for (const token of allTokens) {
+        try {
+          const balanceResponse = await queryContract({
+            user_balance: {
+              token_id: token.id,
+              user: address
+            }
+          });
+          
+          if (balanceResponse.balance && parseFloat(balanceResponse.balance) > 0) {
+            userTokensWithBalances.push({
+              id: token.id,
+              name: token.info.name,
+              symbol: token.info.symbol,
+              balance: balanceResponse.balance,
+              value: 0, // TODO: Calculate actual value based on current price
+              change24h: 0, // TODO: Calculate 24h change
+              image_url: token.info.image_url
+            });
+          }
+        } catch (error) {
+          // User has no balance for this token, skip
+          console.log(`No balance for token ${token.id}:`, error);
+        }
+      }
+      
+      setUserTokens(userTokensWithBalances);
       
     } catch (error) {
       console.error('Failed to load portfolio:', error);

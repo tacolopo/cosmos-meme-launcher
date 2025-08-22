@@ -515,20 +515,20 @@ const Trade: React.FC = () => {
             <VStack spacing={4} align="stretch">
               <Stat size="sm">
                 <StatLabel>24h Volume</StatLabel>
-                <StatNumber>1,234 ATOM</StatNumber>
-                <StatHelpText>+12.5%</StatHelpText>
+                <StatNumber>-- ATOM</StatNumber>
+                <StatHelpText>Coming soon</StatHelpText>
               </Stat>
               
               <Stat size="sm">
                 <StatLabel>Active Traders</StatLabel>
-                <StatNumber>89</StatNumber>
-                <StatHelpText>Last 24h</StatHelpText>
+                <StatNumber>--</StatNumber>
+                <StatHelpText>Coming soon</StatHelpText>
               </Stat>
               
               <Stat size="sm">
                 <StatLabel>Total Raised</StatLabel>
-                <StatNumber>5,678 ATOM</StatNumber>
-                <StatHelpText>All time</StatHelpText>
+                <StatNumber>{selectedToken ? formatAmount(selectedToken.total_raised) : '--'} ATOM</StatNumber>
+                <StatHelpText>Current token</StatHelpText>
               </Stat>
             </VStack>
           </CardBody>

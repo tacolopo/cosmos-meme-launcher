@@ -1,8 +1,8 @@
 use cosmwasm_std::{to_json_binary, Binary, Deps, Env, StdResult, Uint128};
 use meme_shared::ContractError;
 
-use crate::msg::{ConfigResponse, MemeTokenResponse, MemeTokensResponse, QueryMsg, QuoteResponse};
-use crate::state::{BONDING_CURVES, CONFIG, CREATOR_TOKENS, MEME_TOKENS};
+use crate::msg::{ConfigResponse, MemeTokenResponse, MemeTokensResponse, QueryMsg, QuoteResponse, UserBalanceResponse};
+use crate::state::{BONDING_CURVES, CONFIG, CREATOR_TOKENS, MEME_TOKENS, USER_BALANCES};
 
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
@@ -29,6 +29,9 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
             token_id,
             token_amount,
         } => to_json_binary(&query_sell_quote(deps, token_id, token_amount)?),
+        QueryMsg::UserBalance { token_id, user } => {
+            to_json_binary(&query_user_balance(deps, token_id, user)?)
+        }
     }
 }
 
@@ -147,4 +150,13 @@ fn query_sell_quote(deps: Deps, token_id: u64, token_amount: Uint128) -> StdResu
         amount_out: atom_out,
         price_impact,
     })
+}
+
+fn query_user_balance(deps: Deps, token_id: u64, user: String) -> StdResult<UserBalanceResponse> {
+    let user_addr = deps.api.addr_validate(&user)?;
+    let balance = USER_BALANCES
+        .may_load(deps.storage, (token_id, &user_addr))?
+        .unwrap_or_default();
+    
+    Ok(UserBalanceResponse { balance })
 }

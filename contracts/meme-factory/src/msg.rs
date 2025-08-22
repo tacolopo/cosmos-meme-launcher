@@ -78,6 +78,11 @@ pub enum QueryMsg {
         token_id: u64,
         token_amount: Uint128,
     },
+    /// Get user balance for a specific token
+    UserBalance {
+        token_id: u64,
+        user: String,
+    },
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -104,4 +109,9 @@ pub struct MemeTokensResponse {
 pub struct QuoteResponse {
     pub amount_out: Uint128,
     pub price_impact: String, // percentage as string
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct UserBalanceResponse {
+    pub balance: Uint128,
 }
