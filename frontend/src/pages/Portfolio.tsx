@@ -66,51 +66,11 @@ const Portfolio: React.FC = () => {
     if (isConnected && address) {
       loadPortfolioData();
     } else {
-      // Show demo data when not connected
-      setUserTokens([
-        {
-          id: 1,
-          name: 'CosmoDoge',
-          symbol: 'CDOGE',
-          balance: '1500000',
-          value: 45.67,
-          change24h: 12.5,
-          image_url: 'https://via.placeholder.com/40?text=🐕',
-        },
-        {
-          id: 2,
-          name: 'AtomCat',
-          symbol: 'ACAT',
-          balance: '750000',
-          value: 23.45,
-          change24h: -5.2,
-          image_url: 'https://via.placeholder.com/40?text=🐱',
-        },
-        {
-          id: 3,
-          name: 'RocketMoon',
-          symbol: 'MOON',
-          balance: '2000000',
-          value: 89.12,
-          change24h: 34.7,
-          image_url: 'https://via.placeholder.com/40?text=🚀',
-        },
-      ]);
-
-      setCreatedTokens([
-        {
-          id: 1,
-          name: 'CosmoDoge',
-          symbol: 'CDOGE',
-          total_raised: '500000000',
-          target_raise: '1000000000',
-          is_launched: false,
-          created_at: Date.now() - 86400000, // 1 day ago
-        },
-      ]);
-
-      setTotalValue(158.24);
-      setTotalPnL(15.67);
+      // No demo data - show empty state
+      setUserTokens([]);
+      setCreatedTokens([]);
+      setTotalValue(0);
+      setTotalPnL(0);
     }
   }, [isConnected, address]);
 

@@ -58,54 +58,8 @@ const Home: React.FC = () => {
 
   const loadTokens = async () => {
     if (!isConnected) {
-      // Show demo data when not connected
-      setTokens([
-        {
-          id: 1,
-          info: {
-            name: 'CosmoDoge',
-            symbol: 'CDOGE',
-            description: 'The first meme coin on Cosmos Hub! Much wow, very decentralized! 🐕',
-            image_url: 'https://via.placeholder.com/100?text=🐕',
-          },
-          creator: 'cosmos1abc...def',
-          total_raised: '500000000',
-          is_launched: false,
-          config: {
-            target_raise: '1000000000',
-          },
-        },
-        {
-          id: 2,
-          info: {
-            name: 'AtomCat',
-            symbol: 'ACAT',
-            description: 'Meow meow on the interchain! The purrfect investment 🐱',
-            image_url: 'https://via.placeholder.com/100?text=🐱',
-          },
-          creator: 'cosmos1xyz...abc',
-          total_raised: '800000000',
-          is_launched: false,
-          config: {
-            target_raise: '1000000000',
-          },
-        },
-        {
-          id: 3,
-          info: {
-            name: 'RocketMoon',
-            symbol: 'MOON',
-            description: 'To the moon and beyond with Cosmos technology! 🚀🌙',
-            image_url: 'https://via.placeholder.com/100?text=🚀',
-          },
-          creator: 'cosmos1def...xyz',
-          total_raised: '1200000000',
-          is_launched: true,
-          config: {
-            target_raise: '1000000000',
-          },
-        },
-      ]);
+      // No demo data - show empty state
+      setTokens([]);
       setLoading(false);
       return;
     }

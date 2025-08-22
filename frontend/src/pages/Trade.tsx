@@ -107,41 +107,8 @@ const Trade: React.FC = () => {
 
   const loadTokens = async () => {
     if (!isConnected) {
-      // Demo data
-      setTokens([
-        {
-          id: 1,
-          info: {
-            name: 'CosmoDoge',
-            symbol: 'CDOGE',
-            description: 'The first meme coin on Cosmos Hub! Much wow, very decentralized! 🐕',
-            image_url: 'https://via.placeholder.com/100?text=🐕',
-          },
-          creator: 'cosmos1abc...def',
-          total_raised: '500000000',
-          is_launched: false,
-          config: {
-            target_raise: '1000000000',
-            initial_supply: '1000000000000',
-          },
-        },
-        {
-          id: 2,
-          info: {
-            name: 'AtomCat',
-            symbol: 'ACAT',
-            description: 'Meow meow on the interchain! The purrfect investment 🐱',
-            image_url: 'https://via.placeholder.com/100?text=🐱',
-          },
-          creator: 'cosmos1xyz...abc',
-          total_raised: '800000000',
-          is_launched: false,
-          config: {
-            target_raise: '1000000000',
-            initial_supply: '1000000000000',
-          },
-        },
-      ]);
+      // No demo data - show empty state
+      setTokens([]);
       return;
     }
 
