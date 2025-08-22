@@ -1,7 +1,7 @@
 // Contract configuration for Cosmos Hub
 export const CONTRACTS = {
   // Deployed contract addresses
-  MEME_FACTORY: 'cosmos1pdguwgdtg225u22097a7wq7leuvulex8hxalr6hdtx6kqhq4sk7qew0k0y',
+  MEME_FACTORY: 'cosmos1dm97n7hnztp73ctekf0a8qfnaqlggpz3mvn5c9kjhjfqzu8tl3uq3d2yd6',
   
   // Code IDs for instantiation
   MEME_TOKEN_CODE_ID: 293,
