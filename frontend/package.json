@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
     "@chakra-ui/react": "^2.8.2",
     "@cosmjs/cosmwasm-stargate": "^0.32.2",
     "@cosmjs/proto-signing": "^0.32.2",
@@ -27,9 +28,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -51,6 +52,10 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@craco/craco": "^7.1.0",
+    "@types/react-router-dom": "^5.3.3",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
+    "stream-browserify": "^3.0.0"
   }
 }
