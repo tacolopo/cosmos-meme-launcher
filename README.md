@@ -1,4 +1,4 @@
-# Cosmos Meme Coin Launcher 🚀
+# Cosmos Meme Coin Launcher
 
 A simple, user-friendly platform for launching meme coins on Cosmos Hub using the new permissionless smart contracts enabled by prop 1007. Based on https://github.com/BIG-Labs/cooking-contracts. This is in beta. Contracts should be expected to change and funds should be expected to be lost. This is simply a test deployment. Users of this software should expect to lost everything if they decide to interact with this application.
 
